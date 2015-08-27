@@ -1,2 +1,8 @@
-<h1>Study#index</h1>
-<p>Find me in app/views/study/index.html.erb</p>
+<h1>초단기 암기 시스템</h1>
+<h2>Luxury Funding</h2>
+<p>암기박스</p>
+<ul>
+  <% @boxes.each do |b| %>
+    <li><a href="/study/<%=b.id%>"><%=b.title%></a></li>
+  <% end %>
+</ul>

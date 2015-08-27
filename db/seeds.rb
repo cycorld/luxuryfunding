@@ -12,5 +12,5 @@ user = User.create(email: "choi@likelion.net", password: "12341234", password_co
 box = Box.create(user_id: user.id, title: "MD Vocabulary 33000")
 
 CSV.foreach('db/day1.csv', {headers: true}) do |r|
-  Card.create(box_id: box.id, question: r["question"], answer: r["answer"])
+  Card.create(box_id: box.id, question: r["answer"], answer: r["question"])
 end

@@ -1,7 +1,10 @@
 <ol>
   <% 1.upto(5) do |i| %>
   <li>
-    <%=@cards.where(stage: i).count%>
+    <a href="/study/<%=params[:box_id]%>?stage=<%=i%>"><%=@cards.where(stage: i).count%></a>
+    <% if @stage == i %>
+      &lt;&lt;
+    <% end %>
   </li>
   <% end %>
 </ol>

@@ -19,4 +19,18 @@ class StudyController < ApplicationController
       end
     end
   end
+
+  def know
+    c = Card.find(params[:id])
+    c.stage += 1
+    c.save
+    redirect_to :back
+  end
+
+  def unknow
+    c = Card.find(params[:id])
+    c.stage = 1
+    c.save
+    redirect_to :back
+  end
 end

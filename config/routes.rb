@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get '/study/:box_id' => 'study#study'
+  get '/study/know/:id' => 'study#know'
+  get '/study/unknow/:id' => 'study#unknow'
 
   root 'study#index'
 

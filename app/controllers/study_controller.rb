@@ -15,7 +15,7 @@ class StudyController < ApplicationController
         @card = @cards.order('updated_at DESC').last
         @stage = @card.stage
       else
-        @card = @stageds.order('updated_at DESC').first
+        @card = @stageds.order('updated_at DESC').last
       end
     end
   end
@@ -23,12 +23,13 @@ class StudyController < ApplicationController
   def know
     c = Card.find(params[:id])
     c.stage += 1
-    c.save
+    c.save!
     redirect_to :back
   end
 
   def unknow
     c = Card.find(params[:id])
+    c.touch
     c.stage = 1
     c.save
     redirect_to :back

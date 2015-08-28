@@ -11,6 +11,8 @@ AdminUser.create!(email: 'admin@example.com', password: 'password', password_con
 user = User.create(email: "choi@likelion.net", password: "12341234", password_confirmation: "12341234")
 box = Box.create(user_id: user.id, title: "MD Vocabulary 33000")
 
-CSV.foreach('db/day1.csv', {headers: true}) do |r|
-  Card.create(box_id: box.id, question: r["answer"], answer: r["question"])
+Dir.glob('./db/md_voca/*.csv').each do |csv|
+  CSV.foreach(csv, {headers: true}) do |r|
+    Card.create(box_id: box.id, question: r["answer"], answer: r["question"])
+  end
 end

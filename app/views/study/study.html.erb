@@ -12,16 +12,28 @@
   <%=@card.question%>
 </h1>
 <div id="answer" style="display:none">
-  <h2>
-    <%=@card.answer%>
+  <h2 id="answer_text">
+    <span id="text_to_play"><%=@card.answer%></span> <span id="play_btn"><i class="fa fa-play"></i></span>
   </h2>
   <h1><a href="/study/unknow/<%=@card.id%>">모른다</a></h1>
   <h1><a href="/study/know/<%=@card.id%>">안다</a></h1>
 </div>
 <script>
 $(document).ready(function() {
-    $("#question").on("click", function() {
-      $("#answer").show();
+  $("#question").on("click", function() {
+    $("#answer").show();
+    var su = new SpeechSynthesisUtterance();
+    su.lang = "en";
+    su.text = "<%=@card.answer%>";
+    su.rate = 0.8;
+    speechSynthesis.speak(su);
     });
+  $("#answer_text").on("click", function() {
+    var su = new SpeechSynthesisUtterance();
+    su.lang = "en";
+    su.text = "<%=@card.answer%>";
+    su.rate = 0.6;
+    speechSynthesis.speak(su);
+  });
 });
 </script>

@@ -13,17 +13,20 @@ class StudyController < ApplicationController
       @stageds = @cards.where(stage: @stage)
       if @stageds.empty?
         @card = @cards.order('updated_at DESC').last
-        @stage = @card.stage
-      else
-        @card = @stageds.order('updated_at DESC').last
+        redirect_to "/study/#{params[:box_id]}?stage=#{@card.stage}"
       end
+      @card = @stageds.order('updated_at DESC').last
     end
   end
 
   def know
     c = Card.find(params[:id])
-    c.stage += 1
-    c.save!
+    if c.stage < 5
+      c.stage += 1
+      c.save!
+    else
+      c.touch
+    end
     redirect_to :back
   end
 

@@ -1,4 +1,6 @@
 class StudyController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
+
   def index
     @boxes = Box.all
   end

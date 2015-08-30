@@ -18,22 +18,51 @@
   <h1><a href="/study/unknow/<%=@card.id%>">모른다</a></h1>
   <h1><a href="/study/know/<%=@card.id%>">안다</a></h1>
 </div>
+<% if @card.a_lang == "zh" %>
+<script language="javascript" charset="gb2312" src="/zmj.php.js"></script>
+<% end %>
 <script>
 $(document).ready(function() {
+  var su = new SpeechSynthesisUtterance();
+  su.lang = "<%=@card.q_lang%>";
+  su.text = "<%=@card.question%>";
+  su.rate = 1;
+  speechSynthesis.speak(su);
   $("#question").on("click", function() {
     $("#answer").show();
     var su = new SpeechSynthesisUtterance();
-    su.lang = "en";
+    su.lang = "<%=@card.a_lang%>";
     su.text = "<%=@card.answer%>";
     su.rate = 0.8;
     speechSynthesis.speak(su);
     });
   $("#answer_text").on("click", function() {
     var su = new SpeechSynthesisUtterance();
-    su.lang = "en";
+    su.lang = "<%=@card.a_lang%>";
     su.text = "<%=@card.answer%>";
     su.rate = 0.6;
     speechSynthesis.speak(su);
   });
 });
+  <% if @card.a_lang == "zh" %>
+  function chinese_trans(cc){
+    var str='',str2;
+    var s;
+    for(var i=0;i<cc.length;i++){
+      if(pydic.indexOf(cc.charAt(i))!=-1&&cc.charCodeAt(i)>200){
+        s=1;
+        while(pydic.charAt(pydic.indexOf(cc.charAt(i))+s)!=","){
+          str+=pydic.charAt(pydic.indexOf(cc.charAt(i))+s);
+          s++;
+        }
+        str+=" ";
+      }
+      else{
+        str+=cc.charAt(i);
+      }
+    }
+    return str;
+  }
+  $("#answer_text").append(chinese_trans("<%=@card.answer%>"));
+  <% end %>
 </script>

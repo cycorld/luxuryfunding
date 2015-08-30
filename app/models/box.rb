@@ -4,7 +4,7 @@ class Box < ActiveRecord::Base
 
   def import file
     CSV.foreach(file, {headers: true}) do |r|
-      Card.create(box_id: id, question: r["question"], answer: r["answer"], q_lang: r["q_lang"], a_lang: r["a_lang"])
+      Card.create(box_id: id, question: r["question"], answer: r["answer"], q_lang: r["q_lang"] || "ko", a_lang: r["a_lang"] || "en")
     end
   end
 end

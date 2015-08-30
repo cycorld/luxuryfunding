@@ -24,14 +24,14 @@ $(document).ready(function() {
     $("#answer").show();
     var su = new SpeechSynthesisUtterance();
     su.lang = "en";
-    su.text = "<%=@card.answer%>";
+    su.text = "<%=@card.answer.html_safe%>";
     su.rate = 0.8;
     speechSynthesis.speak(su);
     });
   $("#answer_text").on("click", function() {
     var su = new SpeechSynthesisUtterance();
     su.lang = "en";
-    su.text = "<%=@card.answer%>";
+    su.text = "<%=@card.answer.html_safe%>";
     su.rate = 0.6;
     speechSynthesis.speak(su);
   });

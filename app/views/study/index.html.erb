@@ -6,19 +6,25 @@
   <h1>암기 자료</h1>
   <% @books.each do |b| %>
     <h2><%=b.title%></h2>
-      <table class="table table-condensed table-hover">
+    <table class="table table-condensed table-hover">
+      <tr>
+        <th>챕터</th>
+        <th>질문</th>
+        <th>답변</th>
+        <th>액션</th>
+      </tr>
         <% b.chapters.each_with_index do |chapter, chapter_i| %>
           <% chapter.cards.each_with_index do |c, i| %>
             <tr>
               <% if i == 0 %>
                 <td rowspan=<%=chapter.cards.count%>>
                   <%=chapter.title%><br>
-                  <a href="#add">통째로 추가</a>
+                  <a class="add" href="/box/add_chapter/<%=chapter.id%>">통째로 추가</a>
                 </td>
               <% end %>
               <td><%=c.question%></td>
               <td><%=c.answer%></td>
-              <td><a href="#add">추가</a></td>
+              <td><a class="add" href="/box/add_card/<%=c.id%>">추가</a></td>
             </tr>
           <% end %>
         <% end %>
@@ -27,11 +33,18 @@
 </div>
 <div class="col-lg-6">
   <h1>내 암기박스들</h1>
-  <ol>
+  <table class="table">
+    <tr>
+      <th>선택</th>
+      <th>단어 박스</th>
+    </tr>
     <% @boxes.each do |b| %>
-      <li><a href="/study/<%=b.id%>"><%=b.title%></a></li>
+      <tr>
+        <td><input type="radio" name="box" value=<%=b.id%>></td>
+        <td><a href="/study/<%=b.id%>"><%=b.title%></a></td>
+      </tr>
     <% end %>
-  </ol>
+  </table>
   <%=form_tag "/box/create", class: "form-inline" do %>
     <div class="form-group">
       <input type="text" class="form-control" name="title" placeholder="암기 박스 제목">
@@ -39,3 +52,18 @@
     </div>
   <% end %>
 </div>
+<script>
+$(document).ready(function() {
+    $("a.add").click(function(e) {
+      e.preventDefault();
+      console.log(e);
+      var link = $(this).attr("href")
+      var selected = $("input[name=box]:checked").val();
+      if(selected) {
+        window.location = link + "?box_id=" + selected;
+      } else {
+        alert("우측에서 메모리를 저장할 박스를 선택해주세요!");
+      }
+  });
+})
+</script>

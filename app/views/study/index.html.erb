@@ -28,11 +28,16 @@
   </div>
   <div class="col-lg-6">
     <h1>내 암기박스들</h1>
-    <a href="#new">새로 만들기</a>
     <ol>
       <% @boxes.each do |b| %>
         <li><a href="/study/<%=b.id%>"><%=b.title%></a></li>
       <% end %>
     </ol>
+    <%=form_tag "/box/create", class: "form-inline" do %>
+      <div class="form-group">
+        <input type="text" class="form-control" name="title" placeholder="암기 박스 제목">
+        <input type="submit" class="form-control" value="새로 만들기">
+      </div>
+    <% end %>
   </div>
 </div>

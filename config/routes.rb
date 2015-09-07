@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  get '/study/:box_id' => 'study#study'
-  get '/study/know/:id' => 'study#know'
-  get '/study/unknow/:id' => 'study#unknow'
+  get 'study/:box_id' => 'study#study'
+  get 'study/know/:id' => 'study#know'
+  get 'study/unknow/:id' => 'study#unknow'
+
+  post 'box/create'
 
   root 'study#index'
 

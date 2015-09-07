@@ -67,6 +67,8 @@ $(document).ready(function() {
     }
     return str;
   }
-  $("#answer_text").append(chinese_trans("<%=@card.answer%>"));
+  $(document).ready(function() {
+    $("#answer_text").append(chinese_trans("<%=@card.answer%>"));
+  });
   <% end %>
 </script>

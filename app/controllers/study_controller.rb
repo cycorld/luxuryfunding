@@ -1,8 +1,8 @@
 class StudyController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!
 
   def index
-    @boxes = Box.all
+    @boxes = Box.where(user: current_user)
     @books = Book.all
   end
 

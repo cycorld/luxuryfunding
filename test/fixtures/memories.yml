@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  box_id: 1
+  question: MyString
+  answer: MyString
+  stage: 1
+  q_lang: MyString
+  a_lang: MyString
+
+two:
+  box_id: 1
+  question: MyString
+  answer: MyString
+  stage: 1
+  q_lang: MyString
+  a_lang: MyString

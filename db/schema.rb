@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830172954) do
+ActiveRecord::Schema.define(version: 20150907161147) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -46,6 +46,14 @@ ActiveRecord::Schema.define(version: 20150830172954) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
+  create_table "books", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "intro"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "boxes", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.string   "title",      null: false
@@ -54,14 +62,32 @@ ActiveRecord::Schema.define(version: 20150830172954) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer  "box_id",                    null: false
+    t.integer  "chapter_id",                null: false
     t.string   "question",                  null: false
     t.string   "answer",                    null: false
+    t.string   "q_lang",     default: "ko"
+    t.string   "a_lang",     default: "en"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "chapters", force: :cascade do |t|
+    t.integer  "book_id"
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "memories", force: :cascade do |t|
+    t.integer  "box_id",                    null: false
+    t.integer  "card_id",                   null: false
+    t.string   "question",                  null: false
+    t.string   "answer",                    null: false
+    t.string   "q_lang",     default: "ko"
+    t.string   "a_lang",     default: "en"
     t.integer  "stage",      default: 1
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.string   "q_lang",     default: "ko"
-    t.string   "a_lang",     default: "en"
   end
 
   create_table "users", force: :cascade do |t|

@@ -3,13 +3,15 @@ class StudyController < ApplicationController
 
   def index
     @boxes = Box.all
+    @books = Book.all
   end
 
   def study
     b = Box.find(params[:box_id])
-    @cards = b.cards
+    @cards = b.memories
     if @cards.empty?
-      render text: "empty cards..."
+      flash[:alert] = "박스가 비었습니다. 왼쪽에서 메모리를 추가해주세요!"
+      redirect_to :root
     else
       @stage = params[:stage].to_i || @cards.order('updated_at DESC').last.stage
       @stageds = @cards.where(stage: @stage)
@@ -22,7 +24,7 @@ class StudyController < ApplicationController
   end
 
   def know
-    c = Card.find(params[:id])
+    c = Memory.find(params[:id])
     if c.stage < 5
       c.stage += 1
       c.save!
@@ -33,7 +35,7 @@ class StudyController < ApplicationController
   end
 
   def unknow
-    c = Card.find(params[:id])
+    c = Memory.find(params[:id])
     c.touch
     c.stage = 1
     c.save

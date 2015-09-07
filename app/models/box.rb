@@ -1,6 +1,6 @@
 class Box < ActiveRecord::Base
   belongs_to :user
-  has_many :cards
+  has_many :memories
 
   def import file
     CSV.foreach(file, {headers: true}) do |r|

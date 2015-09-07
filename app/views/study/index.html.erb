@@ -59,7 +59,7 @@ $(document).ready(function() {
       console.log(e);
       var link = $(this).attr("href")
       var selected = $("input[name=box]:checked").val();
-      if(selected) {
+      if (selected) {
         window.location = link + "?box_id=" + selected;
       } else {
         alert("우측에서 메모리를 저장할 박스를 선택해주세요!");

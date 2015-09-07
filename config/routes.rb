@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 
   post 'box/create'
 
+  get 'box/add_chapter/:id' => 'box#add_chapter'
+  get 'box/add_card/:id' => 'box#add_card'
+
   root 'study#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

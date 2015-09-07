@@ -8,12 +8,26 @@ class BoxController < ApplicationController
 
   def add_chapter
     chapter = Chapter.find(params[:id])
-    params[:box_id]
+    total_count = chapter.cards.count
+    count = 0
+    chapter.cards.each do |c|
+      unless Memory.where(box_id: params[:box_id], card_id: c.id).take
+        m = Memory.create(box_id: params[:box_id],
+                      card_id: c.id,
+                      question: c.question,
+                      answer: c.answer,
+                      q_lang: c.q_lang,
+                      a_lang: c.a_lang)
+        count += 1 if m
+      end
+    end
+    flash[:alert] = "#{total_count} 개의 카드 중 #{count} 개의 카드를 추가했습니다!"
+    redirect_to :root
   end
 
   def add_card
     card = Card.find(params[:id])
-    if Memory.where(card_id: params[:id]).take
+    if Memory.where(box_id: params[:box_id], card_id: params[:id]).take
       flash[:alert] = "이 박스에는 이미 추가된 카드입니다."
       redirect_to :root
       return

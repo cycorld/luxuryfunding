@@ -15,7 +15,7 @@
       </tr>
         <% b.chapters.each_with_index do |chapter, chapter_i| %>
           <% chapter.cards.each_with_index do |c, i| %>
-            <tr>
+            <tr <%="class=danger" if @memories.where(card_id: c.id).take%>>
               <% if i == 0 %>
                 <td rowspan=<%=chapter.cards.count%>>
                   <%=chapter.title%><br>

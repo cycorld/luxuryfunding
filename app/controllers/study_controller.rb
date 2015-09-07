@@ -2,8 +2,9 @@ class StudyController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @boxes = Box.where(user: current_user)
+    @boxes = current_user.boxes
     @books = Book.all
+    @memories = current_user.memories
   end
 
   def study

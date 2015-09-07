@@ -1,8 +1,38 @@
-<h1>초단기 암기 시스템</h1>
-<h2>Luxury Funding</h2>
-<p>암기박스</p>
-<ul>
-  <% @boxes.each do |b| %>
-    <li><a href="/study/<%=b.id%>"><%=b.title%></a></li>
-  <% end %>
-</ul>
+<div class="container">
+  <div class="jumbotron">
+    <h1>초단기 암기 시스템</h1>
+    <h2>Luxury Funding</h2>
+  </div>
+  <div class="col-lg-6">
+    <h1>암기 자료</h1>
+    <% @books.each do |b| %>
+      <h2><%=b.title%></h2>
+        <table class="table table-condensed table-hover">
+          <% b.chapters.each_with_index do |chapter, chapter_i| %>
+            <% chapter.cards.each_with_index do |c, i| %>
+              <tr>
+                <% if i == 0 %>
+                  <td rowspan=<%=chapter.cards.count%>>
+                    <%=chapter.title%><br>
+                    <a href="#add">통째로 추가</a>
+                  </td>
+                <% end %>
+                <td><%=c.question%></td>
+                <td><%=c.answer%></td>
+                <td><a href="#add">추가</a></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      <% end %>
+  </div>
+  <div class="col-lg-6">
+    <h1>내 암기박스들</h1>
+    <a href="#new">새로 만들기</a>
+    <ol>
+      <% @boxes.each do |b| %>
+        <li><a href="/study/<%=b.id%>"><%=b.title%></a></li>
+      <% end %>
+    </ol>
+  </div>
+</div>

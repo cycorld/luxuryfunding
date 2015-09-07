@@ -3,6 +3,7 @@ class StudyController < ApplicationController
 
   def index
     @boxes = Box.all
+    @books = Book.all
   end
 
   def study

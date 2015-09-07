@@ -23,12 +23,14 @@
 <% end %>
 <script>
 $(document).ready(function() {
+  speechSynthesis.cancel();
   var su = new SpeechSynthesisUtterance();
   su.lang = "<%=@card.q_lang%>";
   su.text = "<%=@card.question%>";
   su.rate = 1;
   speechSynthesis.speak(su);
   $("#question").on("click", function() {
+    speechSynthesis.cancel();
     $("#answer").show();
     var su = new SpeechSynthesisUtterance();
     su.lang = "<%=@card.a_lang%>";
@@ -37,6 +39,7 @@ $(document).ready(function() {
     speechSynthesis.speak(su);
     });
   $("#answer_text").on("click", function() {
+    speechSynthesis.cancel();
     var su = new SpeechSynthesisUtterance();
     su.lang = "<%=@card.a_lang%>";
     su.text = "<%=@card.answer%>";

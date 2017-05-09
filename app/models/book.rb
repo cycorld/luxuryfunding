@@ -40,4 +40,24 @@ class Book < ActiveRecord::Base
       end
     end
   end
+
+  def self.get_folder_from_quizlet(url)
+    require 'open-uri'
+    if url =~ /https:\/\/quizlet\.com\/.+\/folders\/.+\/sets/
+      browser = Watir::Browser.new(:phantomjs)
+      browser.goto(url)
+      doc = Nokogiri::HTML(browser.html, nil, 'utf-8')
+      title = doc.css('.DashboardHeaderTitle-main').text
+      links = doc.css('.DashboardListItem .UILinkBox')
+        .map{|link| {title: link.css('.UILinkBox-inner .SetPreview-cardHeaderTitle').text, link: link.css('.UILinkBox-link a.UILink').attr('href').text}}
+        .sort_by{|h| h[:link].scan(/https:\/\/quizlet.com\/\d+\/(.+)\//)}
+      p title
+      links.each do |link|
+        p link
+        self.get_quizlet(title, link[:title], link[:link])
+      end
+    else
+      p "invalid url"
+    end
+  end
 end

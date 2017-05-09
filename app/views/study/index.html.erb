@@ -22,8 +22,8 @@
                   <a class="add" href="/box/add_chapter/<%=chapter.id%>">통째로 추가</a>
                 </td>
               <% end %>
-              <td><%=c.question%></td>
-              <td><%=c.answer%></td>
+              <td><%=c.question.html_safe%></td>
+              <td><%=c.answer.html_safe%></td>
               <td><a class="add" href="/box/add_card/<%=c.id%>">추가</a></td>
             </tr>
           <% end %>

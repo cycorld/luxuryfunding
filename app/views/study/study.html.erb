@@ -9,11 +9,11 @@
   <% end %>
 </ol>
 <h1 id="question">
-  <%=@card.question%>
+  <%=@card.question.html_safe%>
 </h1>
 <div id="answer" style="display:none">
   <h2 id="answer_text">
-    <span id="text_to_play"><%=@card.answer%></span> <span id="play_btn"><i class="fa fa-play"></i></span>
+    <span id="text_to_play"><%=@card.answer.html_safe%></span> <span id="play_btn"><i class="fa fa-play"></i></span>
   </h2>
   <h1><a href="/study/unknow/<%=@card.id%>">모른다</a></h1>
   <h1><a href="/study/know/<%=@card.id%>">안다</a></h1>
@@ -26,7 +26,7 @@ $(document).ready(function() {
   speechSynthesis.cancel();
   var su = new SpeechSynthesisUtterance();
   su.lang = "<%=@card.q_lang%>";
-  su.text = "<%=@card.question.html_safe%>";
+  su.text = "<%=Nokogiri::HTML(@card.question).text%>";
   su.rate = 1;
   speechSynthesis.speak(su);
   $("#question").on("click", function() {
@@ -34,7 +34,7 @@ $(document).ready(function() {
     $("#answer").show();
     var su = new SpeechSynthesisUtterance();
     su.lang = "<%=@card.a_lang%>";
-    su.text = "<%=@card.answer.html_safe%>";
+    su.text = "<%=Nokogiri::HTML(@card.answer).text%>";
     su.rate = 0.8;
     speechSynthesis.speak(su);
     });
@@ -43,7 +43,7 @@ $(document).ready(function() {
     var su = new SpeechSynthesisUtterance();
     su.lang = "en";
     su.lang = "<%=@card.a_lang%>";
-    su.text = "<%=@card.answer.html_safe%>";
+    su.text = "<%=Nokogiri::HTML(@card.answer).text%>";
     su.rate = 0.6;
     speechSynthesis.speak(su);
   });
@@ -68,7 +68,7 @@ $(document).ready(function() {
     return str;
   }
   $(document).ready(function() {
-    $("#answer_text").append(chinese_trans("<%=@card.answer%>"));
+    $("#answer_text").append(chinese_trans("<%=@card.answer.html_safe%>"));
   });
   <% end %>
 </script>

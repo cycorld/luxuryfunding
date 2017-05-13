@@ -4,10 +4,11 @@ class CreateCards < ActiveRecord::Migration
       t.integer :chapter_id, null: false
       t.string :question, null: false
       t.string :answer, null: false
-      t.string :q_lang, default: "ko"
-      t.string :a_lang, default: "en"
+      t.string :q_lang, default: "en"
+      t.string :a_lang, default: "ko"
 
       t.timestamps null: false
     end
+    add_index :cards, :chapter_id
   end
 end

@@ -5,11 +5,14 @@ class CreateMemories < ActiveRecord::Migration
       t.integer :card_id, null: false
       t.string :question, null: false
       t.string :answer, null: false
-      t.string :q_lang, default: "ko"
-      t.string :a_lang, default: "en"
+      t.string :q_lang, default: "en"
+      t.string :a_lang, default: "ko"
       t.integer :stage, default: 1
 
       t.timestamps null: false
     end
+    add_index :memories, :box_id
+    add_index :memories, :card_id
+    add_index :memories, :stage
   end
 end

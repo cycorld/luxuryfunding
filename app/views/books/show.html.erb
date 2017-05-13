@@ -18,13 +18,18 @@
           <td rowspan=<%=chapter.cards.length%>>
             <%=chapter.title%><br>
             <% if user_signed_in? %>
-            <select class="add_chapter" data-id="<%=chapter.id%>">
-              <option value="" disabled selected>Add all cards</option>
-                <%= current_user.boxes.each do |box| %>
-                  <option value="<%=box.id%>"><%=box.title%></option>
+              <select class="add_chapter form-control" data-id="<%=chapter.id%>">
+                <option value="" disabled selected>Add all cards</option>
+                  <%= current_user.boxes.each do |box| %>
+                    <option value="<%=box.id%>"><%=box.title%></option>
+                  <% end %>
+                <option value="new">새 박스 만들기</option>
+              </select>
+              <% if current_user == chapter.user %>
+                <%= link_to edit_chapter_path(chapter) do %>
+                  <button class="btn btn-warning">Edit</button>
                 <% end %>
-              <option value="new">새 박스 만들기</option>
-            </select>
+              <% end %>
             <% else %>
               <a href="/users/sign_in"><button class="btn btn-sm btn-primary">Add (You need sign in)</button></a>
             <% end %>
@@ -34,7 +39,7 @@
         <td><%=c.answer.html_safe%></td>
         <td>
           <% if user_signed_in? %>
-            <select class="add_card" data-id="<%=c.id%>">
+            <select class="add_card form-control" data-id="<%=c.id%>">
               <option value="" disabled selected>Add this card</option>
               <%= current_user.boxes.each do |box| %>
                 <option value="<%=box.id%>"><%=box.title%></option>

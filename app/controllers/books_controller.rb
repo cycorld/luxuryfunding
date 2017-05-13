@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   def index
-    @books = Book.all.includes(:chapters)
+    @books = Book.all.includes(:chapters).includes(:cards)
   end
 
   def show

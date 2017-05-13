@@ -1,44 +1,50 @@
 <div class="row">
   <div class="col-lg-12">
-    <h1>내 암기박스들</h1>
+    <h2>My Memorization Boxes</h2>
     <table class="table">
       <tr>
-        <th>선택</th>
-        <th>단어 박스</th>
+        <th>#</th>
+        <th>Title of your box</th>
       </tr>
-      <% @boxes.each do |b| %>
+      <% @boxes.each_with_index do |b, i| %>
         <tr>
-          <td><input type="radio" name="box" value=<%=b.id%>></td>
+          <td><%= i + 1 %></td>
           <td><a href="/study/<%=b.id%>"><%=b.title%></a></td>
         </tr>
       <% end %>
+      <tr>
+        <td></td>
+        <td>
+          <%=form_tag "/box/create", class: "form-inline" do %>
+            <div class="form-group">
+              <input type="text" class="form-control" name="title" placeholder="Input the title of a box">
+              <input type="submit" class="form-control" value="Create">
+            </div>
+          <% end %>
+        </td>
+      </tr>
     </table>
-    <%=form_tag "/box/create", class: "form-inline" do %>
-      <div class="form-group">
-        <input type="text" class="form-control" name="title" placeholder="암기 박스 제목">
-        <input type="submit" class="form-control" value="새로 만들기">
-      </div>
-    <% end %>
   </div>
   <div class="col-lg-12">
-    <h1>암기 자료</h1>
-    <% @books.each do |b| %>
-      <h3><%=link_to "#{b.id}. #{b.title}", book_path(b)%></h3>
-    <% end %>
+    <h2>
+      New Books
+      <small><%= link_to 'View all of books', books_path %></small>
+    </h2>
+    <table class="table">
+      <tr>
+        <th>#</th>
+        <th>Title of the book</th>
+        <th>Count of chapters in the book</th>
+        <th>Count of cards in the book</th>
+      </tr>
+      <% @books.each do |b| %>
+        <tr>
+          <td><%= b.id %></td>
+          <td><%=link_to b.title, book_path(b)%></td>
+          <td><%= b.chapters.length %></td>
+          <td><%= b.cards.length %></td>
+        </tr>
+      <% end %>
+    </table>
   </div>
 </div>
-<script>
-$(document).ready(function() {
-    $("a.add").click(function(e) {
-      e.preventDefault();
-      console.log(e);
-      var link = $(this).attr("href")
-      var selected = $("input[name=box]:checked").val();
-      if (selected) {
-        window.location = link + "?box_id=" + selected;
-      } else {
-        alert("우측에서 메모리를 저장할 박스를 선택해주세요!");
-      }
-  });
-})
-</script>

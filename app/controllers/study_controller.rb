@@ -3,7 +3,7 @@ class StudyController < ApplicationController
 
   def index
     @boxes = current_user.boxes
-    @books = Book.all.includes(:chapters).includes(:cards)
+    @books = Book.includes(:chapters).includes(:cards).last(10).reverse
     @memories = current_user.memories.pluck(:card_id)
   end
 

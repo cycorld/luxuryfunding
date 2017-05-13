@@ -1,5 +1,20 @@
-<%= link_to '홈으로 가기', root_path %>
-<% @books.each do |b| %>
-  <h3><%= link_to "#{b.id}. #{b.title}", book_path(b) %></h3>
-<% end %>
-<%= link_to '홈으로 가기', root_path %>
+<div class="row">
+  <h2>All Books</h2>
+  <table class="table">
+    <tr>
+      <th>#</th>
+      <th>Title of the book</th>
+      <th>Count of chapters in the book</th>
+      <th>Count of cards in the book</th>
+    </tr>
+    <% @books.each do |b| %>
+      <tr>
+        <td><%= b.id %></td>
+        <td><%=link_to b.title, book_path(b)%></td>
+        <td><%= b.chapters.length %></td>
+        <td><%= b.cards.length %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= link_to 'Go to home', root_path %>
+</div>

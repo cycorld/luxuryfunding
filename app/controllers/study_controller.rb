@@ -9,18 +9,25 @@ class StudyController < ApplicationController
 
   def study
     b = Box.find(params[:box_id])
+    redirect_to :root if b.user != current_user
     @cards = b.memories
     if @cards.empty?
-      flash[:alert] = "박스가 비었습니다. 왼쪽에서 메모리를 추가해주세요!"
+      flash[:alert] = "The box is empty. Add cards to your box."
       redirect_to :root
     else
+      @stages_color = ['default', 'danger', 'warning', 'info', 'success', 'primary']
       @stage = params[:stage].to_i || @cards.order('updated_at DESC').last.stage
-      @stageds = @cards.where(stage: @stage)
-      if @stageds.empty?
+      @stages = @cards.where(stage: @stage)
+      cards_hash = @cards.pluck(:stage).group_by(&:itself)
+      @counts = cards_hash.map{|k,v| [k, v.length]}.to_h
+      @percents = cards_hash.map{|k,v| [k, 50 * v.length.to_f / @cards.length]}.to_h
+      p @counts
+      if @stages.empty?
         @card = @cards.order('updated_at DESC').last
-        redirect_to "/study/#{params[:box_id]}?stage=#{@card.stage}"
+        return redirect_to "/study/#{params[:box_id]}?stage=#{@card.stage}"
+      else
+        @card = @stages.order('updated_at DESC').last
       end
-      @card = @stageds.order('updated_at DESC').last
     end
   end
 

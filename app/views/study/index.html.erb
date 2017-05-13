@@ -17,33 +17,40 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-12">
-    <h2>My Memorization Boxes</h2>
-    <table class="table">
-      <tr>
-        <th>#</th>
-        <th>Title of your box</th>
-      </tr>
-      <% @boxes.each_with_index do |b, i| %>
+  <% if user_signed_in? %>
+    <div class="col-lg-12">
+      <h2>My Memorization Boxes</h2>
+      <table class="table">
         <tr>
-          <td><%= i + 1 %></td>
-          <td><a href="/study/<%=b.id%>"><%=b.title%></a></td>
+          <th>#</th>
+          <th>Title of your box</th>
         </tr>
-      <% end %>
-      <tr>
-        <td></td>
-        <td>
-          <%=form_tag "/box/create", class: "form-inline" do %>
-            <div class="form-group">
-              <label>Create a new box</label>
-              <input type="text" class="form-control" name="title" placeholder="Input the title">
-              <input type="submit" class="btn btn-danger form-control" value="Create">
-            </div>
-          <% end %>
-        </td>
-      </tr>
-    </table>
-  </div>
+        <% @boxes.each_with_index do |b, i| %>
+          <tr>
+            <td><%= i + 1 %></td>
+            <td><a href="/study/<%=b.id%>"><%=b.title%></a></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td></td>
+          <td>
+            <%=form_tag "/box/create", class: "form-inline" do %>
+              <div class="form-group">
+                <label>Create a new box</label>
+                <input type="text" class="form-control" name="title" placeholder="Input the title">
+                <input type="submit" class="btn btn-danger form-control" value="Create">
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  <% else %>
+    <div class="col-lg-12 text-center">
+      <h1>새로운 암기 박스를 만드려면</h1>
+      <a href="/users/sign_in"><button class="btn btn-lg btn-primary">지금 바로 가입하세요</button></a>
+    </div>
+  <% end %>
   <div class="col-lg-12">
     <h2>
       New Books

@@ -5,6 +5,8 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    @memories = current_user.memories.pluck(:card_id)
+    if user_signed_in?
+      @memories = current_user.memories.pluck(:card_id)
+    end
   end
 end

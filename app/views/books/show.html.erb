@@ -2,36 +2,49 @@
 <h2><%= @book.title %></h2>
 <table class="table table-condensed">
   <tr>
-    <th>챕터</th>
-    <th>질문</th>
-    <th>답변</th>
-    <th>액션</th>
+    <th>Chapter</th>
+    <th>Question</th>
+    <th>Answer</th>
+    <th>Add</th>
   </tr>
   <% @book.chapters.each_with_index do |chapter, chapter_i| %>
     <% chapter.cards.each_with_index do |c, i| %>
-      <tr <%="class=danger" if @memories.include? c.id%>>
+      <% if user_signed_in? %>
+        <tr <%="class=danger" if @memories.include? c.id%>>
+      <% else %>
+        <tr>
+      <% end %>
         <% if i == 0 %>
           <td rowspan=<%=chapter.cards.length%>>
             <%=chapter.title%><br>
+            <% if user_signed_in? %>
             <select class="add_chapter" data-id="<%=chapter.id%>">
               <option value="" disabled selected>Add all cards</option>
-              <%= current_user.boxes.each do |box| %>
-                <option value="<%=box.id%>"><%=box.title%></option>
-              <% end %>
+                <%= current_user.boxes.each do |box| %>
+                  <option value="<%=box.id%>"><%=box.title%></option>
+                <% end %>
               <option value="new">새 박스 만들기</option>
             </select>
+            <% else %>
+              <a href="/users/sign_in"><button class="btn btn-sm btn-primary">Add (You need sign in)</button></a>
+            <% end %>
           </td>
         <% end %>
         <td><%=c.question.html_safe%></td>
         <td><%=c.answer.html_safe%></td>
         <td>
-          <select class="add_card" data-id="<%=c.id%>">
-            <option value="" disabled selected>Add this card</option>
-            <%= current_user.boxes.each do |box| %>
-              <option value="<%=box.id%>"><%=box.title%></option>
-            <% end %>
-            <option value="new">새 박스 만들기</option>
-          </select>
+          <% if user_signed_in? %>
+            <select class="add_card" data-id="<%=c.id%>">
+              <option value="" disabled selected>Add this card</option>
+              <%= current_user.boxes.each do |box| %>
+                <option value="<%=box.id%>"><%=box.title%></option>
+              <% end %>
+              <option value="new">새 박스 만들기</option>
+            </select>
+          <% else %>
+            <a href="/users/sign_in"><button class="btn btn-sm btn-primary">Add (You need sign in)</button></a>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   <% end %>

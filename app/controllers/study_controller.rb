@@ -1,10 +1,12 @@
 class StudyController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index]
 
   def index
-    @boxes = current_user.boxes
     @books = Book.includes(:chapters).includes(:cards).last(10).reverse
-    @memories = current_user.memories.pluck(:card_id)
+    if user_signed_in?
+      @boxes = current_user.boxes
+      @memories = current_user.memories.pluck(:card_id)
+    end
   end
 
   def study

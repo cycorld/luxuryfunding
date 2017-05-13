@@ -89,7 +89,7 @@ GEM
     mime-types (2.6.1)
     mini_portile (0.6.2)
     minitest (5.8.0)
-    mysql2 (0.4.6)
+    mysql2 (0.3.18)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (4.1.0)
@@ -194,7 +194,7 @@ DEPENDENCIES
   capistrano-rvm
   devise
   jquery-rails
-  mysql2
+  mysql2 (~> 0.3.18)
   nokogiri
   pg
   phantomjs

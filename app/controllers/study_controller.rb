@@ -9,11 +9,11 @@ class StudyController < ApplicationController
 
   def study
     b = Box.find(params[:box_id])
-    redirect_to :root if b.user != current_user
+    return redirect_to :root if b.user != current_user
     @cards = b.memories
     if @cards.empty?
       flash[:alert] = "The box is empty. Add cards to your box."
-      redirect_to :root
+      return redirect_to :root
     else
       @stages_color = ['default', 'danger', 'warning', 'info', 'success', 'primary']
       @stage = params[:stage].to_i || @cards.order('updated_at DESC').last.stage

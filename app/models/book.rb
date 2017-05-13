@@ -1,4 +1,5 @@
 class Book < ActiveRecord::Base
+  belongs_to :user
   has_many :chapters
   has_many :cards, through: :chapters
   has_many :memories, through: :chards

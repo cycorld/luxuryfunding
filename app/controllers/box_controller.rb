@@ -8,6 +8,7 @@ class BoxController < ApplicationController
 
   def add_chapter
     chapter = Chapter.find(params[:id])
+    return redirect_to :root if chapter.user != current_user
     total_count = chapter.cards.count
     count = 0
     chapter.cards.each do |c|
@@ -27,6 +28,7 @@ class BoxController < ApplicationController
 
   def add_card
     card = Card.find(params[:id])
+    return redirect_to :root if chapter.user != current_user
     if Memory.where(box_id: params[:box_id], card_id: params[:id]).take or !current_user.boxes.where(id: params[:box_id]).take
       flash[:alert] = "이 박스에는 이미 추가된 카드입니다."
       redirect_to :root

@@ -1,18 +1,15 @@
-<div class="jumbotron">
-  <h1>초단기 암기 시스템</h1>
-  <h2>Luxury Funding</h2>
-</div>
-<div class="col-lg-6">
-  <h1>암기 자료</h1>
-  <% @books.each do |b| %>
-    <h2><%=b.title%></h2>
-    <table class="table table-condensed table-hover">
-      <tr>
-        <th>챕터</th>
-        <th>질문</th>
-        <th>답변</th>
-        <th>액션</th>
-      </tr>
+<div class="row">
+  <div class="col-lg-6">
+    <h1>암기 자료</h1>
+    <% @books.each do |b| %>
+      <h2><%=b.title%></h2>
+      <table class="table table-condensed table-hover">
+        <tr>
+          <th>챕터</th>
+          <th>질문</th>
+          <th>답변</th>
+          <th>액션</th>
+        </tr>
         <% b.chapters.each_with_index do |chapter, chapter_i| %>
           <% chapter.cards.each_with_index do |c, i| %>
             <tr <%="class=danger" if @memories.include? c.id%>>
@@ -30,27 +27,28 @@
         <% end %>
       </table>
     <% end %>
-</div>
-<div class="col-lg-6">
-  <h1>내 암기박스들</h1>
-  <table class="table">
-    <tr>
-      <th>선택</th>
-      <th>단어 박스</th>
-    </tr>
-    <% @boxes.each do |b| %>
+  </div>
+  <div class="col-lg-6">
+    <h1>내 암기박스들</h1>
+    <table class="table">
       <tr>
-        <td><input type="radio" name="box" value=<%=b.id%>></td>
-        <td><a href="/study/<%=b.id%>"><%=b.title%></a></td>
+        <th>선택</th>
+        <th>단어 박스</th>
       </tr>
+      <% @boxes.each do |b| %>
+        <tr>
+          <td><input type="radio" name="box" value=<%=b.id%>></td>
+          <td><a href="/study/<%=b.id%>"><%=b.title%></a></td>
+        </tr>
+      <% end %>
+    </table>
+    <%=form_tag "/box/create", class: "form-inline" do %>
+      <div class="form-group">
+        <input type="text" class="form-control" name="title" placeholder="암기 박스 제목">
+        <input type="submit" class="form-control" value="새로 만들기">
+      </div>
     <% end %>
-  </table>
-  <%=form_tag "/box/create", class: "form-inline" do %>
-    <div class="form-group">
-      <input type="text" class="form-control" name="title" placeholder="암기 박스 제목">
-      <input type="submit" class="form-control" value="새로 만들기">
-    </div>
-  <% end %>
+  </div>
 </div>
 <script>
 $(document).ready(function() {

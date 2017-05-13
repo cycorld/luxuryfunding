@@ -25,6 +25,14 @@ class ChaptersController < ApplicationController
     end
   end
 
+  def upload
+    @chapter = Chapter.new(book_id: params[:chapter][:book_id],
+                           title: params[:chapter][:file].original_filename.split('.')[0],
+                           cards_attributes: Chapter.import(params[:chapter][:file])
+                          )
+    render 'new'
+  end
+
   private
 
   def chapter_params

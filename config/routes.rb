@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources 'books'
-  resources 'chapters'
+  resources 'chapters' do
+    collection do
+      post 'upload'
+    end
+  end
   resources 'cards'
 
   devise_for :users

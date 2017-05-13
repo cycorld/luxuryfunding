@@ -2,10 +2,11 @@
   = f.input :book_id, as: 'hidden'
   = f.input :title
   %h3 Cards
-  #cards
+  .row#cards
     = f.simple_fields_for :cards do |card|
       = render 'card_fields', f: card
-    .links
+    .links.col-sm-12.col-md-6.col-lg-3
       = link_to_add_association 'add card', f, :cards
-  = f.submit
+  .row
+    = f.submit
 

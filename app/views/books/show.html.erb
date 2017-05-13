@@ -1,5 +1,12 @@
 <%= link_to '목록으로 가기', books_path %>
-<h2><%= @book.title %></h2>
+<h2>
+  <%= @book.title %>
+  <% if current_user == @book.user %>
+    <%= link_to new_chapter_path(book_id: @book.id) do %>
+      <button class="btn btn-primary">Add New Chapter</button>
+    <% end %>
+  <% end %>
+</h2>
 <table class="table table-condensed">
   <tr>
     <th>Chapter</th>
@@ -25,7 +32,7 @@
                   <% end %>
                 <option value="new">새 박스 만들기</option>
               </select>
-              <% if current_user == chapter.user %>
+              <% if current_user == @book.user %>
                 <%= link_to edit_chapter_path(chapter) do %>
                   <button class="btn btn-warning">Edit</button>
                 <% end %>

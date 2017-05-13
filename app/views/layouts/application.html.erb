@@ -7,20 +7,24 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <%= csrf_meta_tags %>
 </head>
 <body>
 <div class="container">
-  <h1><a href="/">Luxury Funding</a></h1>
+  <h1>
+    <a href="/">Planting</a>
+    <small class="text-muted">Fastest Memorization</small>
+  </h1>
   <% if flash[:alert] %>
-  <div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong> <%=flash[:alert]%> </strong>
-  </div>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong> <%=flash[:alert]%> </strong>
+    </div>
   <% end %>
-
-  <%= yield %>
-
+  <div class="container">
+    <%= yield %>
+  </div>
 </div>
 </body>
 </html>

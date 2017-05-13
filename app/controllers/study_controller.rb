@@ -3,8 +3,8 @@ class StudyController < ApplicationController
 
   def index
     @boxes = current_user.boxes
-    @books = Book.all
-    @memories = current_user.memories
+    @books = Book.all.includes(:chapters).includes(:cards)
+    @memories = current_user.memories.pluck(:card_id)
   end
 
   def study
@@ -37,7 +37,7 @@ class StudyController < ApplicationController
 
   def unknow
     c = Memory.find(params[:id])
-    c.touch
+    c.touch # if c.stage == 1 then not changed updated_at
     c.stage = 1
     c.save
     redirect_to :back

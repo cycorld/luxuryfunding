@@ -15,9 +15,9 @@
       </tr>
         <% b.chapters.each_with_index do |chapter, chapter_i| %>
           <% chapter.cards.each_with_index do |c, i| %>
-            <tr <%="class=danger" if @memories.where(card_id: c.id).take%>>
+            <tr <%="class=danger" if @memories.include? c.id%>>
               <% if i == 0 %>
-                <td rowspan=<%=chapter.cards.count%>>
+                <td rowspan=<%=chapter.cards.length%>>
                   <%=chapter.title%><br>
                   <a class="add" href="/box/add_chapter/<%=chapter.id%>">통째로 추가</a>
                 </td>

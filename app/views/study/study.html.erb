@@ -1,54 +1,119 @@
-<ol>
-  <% 1.upto(5) do |i| %>
-  <li>
-    <a href="/study/<%=params[:box_id]%>?stage=<%=i%>"><%=@cards.where(stage: i).count%></a>
-    <% if @stage == i %>
-      &lt;&lt;
-    <% end %>
-  </li>
-  <% end %>
-</ol>
-<h1 id="question">
-  <%=@card.question.html_safe%>
-</h1>
-<div id="answer" style="display:none">
-  <h2 id="answer_text">
-    <span id="text_to_play"><%=@card.answer.html_safe%></span> <span id="play_btn"><i class="fa fa-play"></i></span>
-  </h2>
-  <h1><a href="/study/unknow/<%=@card.id%>">모른다</a></h1>
-  <h1><a href="/study/know/<%=@card.id%>">안다</a></h1>
+<div class="row">
+  <div class="progress">
+    <a href="/study/<%=params[:box_id]%>?stage=1">
+      <div class="progress-bar progress-bar-danger" role="progressbar" style="width:10%">
+        <%=@cards.where(stage: 1).count%>
+        <% if @stage == 1 %>
+          &lt;&lt;
+        <% end %>
+      </div>
+    </a>
+    <a href="/study/<%=params[:box_id]%>?stage=2">
+      <div class="progress-bar progress-bar-warning" role="progressbar" style="width:20%">
+        <%=@cards.where(stage: 2).count%>
+        <% if @stage == 2 %>
+          &lt;&lt;
+        <% end %>
+      </div>
+    </a>
+    <a href="/study/<%=params[:box_id]%>?stage=3">
+      <div class="progress-bar progress-bar-info" role="progressbar" style="width:20%">
+        <%=@cards.where(stage: 3).count%>
+        <% if @stage == 3 %>
+          &lt;&lt;
+        <% end %>
+      </div>
+    </a>
+    <a href="/study/<%=params[:box_id]%>?stage=4">
+      <div class="progress-bar progress-bar-success" role="progressbar" style="width:30%">
+        <%=@cards.where(stage: 4).count%>
+        <% if @stage == 4 %>
+          &lt;&lt;
+        <% end %>
+      </div>
+    </a>
+    <a href="/study/<%=params[:box_id]%>?stage=5">
+      <div class="progress-bar progress-bar-primary" role="progressbar" style="width:10%">
+        <%=@cards.where(stage: 5).count%>
+        <% if @stage == 5 %>
+          &lt;&lt;
+        <% end %>
+      </div>
+    </a>
+  </div>
 </div>
+<div class="row">
+  <div class="text-center">
+    <a href="/study/unknow/<%=@card.id%>"><button class="btn btn-lg btn-danger">모른다</button></a>
+    <a href="/study/know/<%=@card.id%>"><button class="btn btn-lg btn-success">안다</button></a>
+    <button id="play_btn" class="btn btn-sm btn-warning"><i class="fa fa-volume-up"></i></button>
+  </div>
+</div>
+<div class="row">
+  <div class="flip">
+    <div class="card">
+      <div class="face front">
+        <div class="alert alert-danger inner">
+          <h1>
+            <%=@card.question.html_safe%>
+          </h1>
+        </div>
+      </div>
+      <div class="face back">
+        <div class="alert alert-info inner">
+          <h1 id="answer_text">
+            <div id="text_to_play"><%=@card.answer.html_safe%></div>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <% if @card.a_lang == "zh" %>
 <script language="javascript" charset="gb2312" src="/zmj.php.js"></script>
 <% end %>
 <script>
-$(document).ready(function() {
+var question_text = "<%=Nokogiri::HTML(@card.question).text%>";
+var answer_text = "<%=Nokogiri::HTML(@card.answer).text%>";
+function play_speaking(speed) {
+  var card = $('.flip .card');
+  if (card.hasClass('flipped')) {
+    play_answer(speed);
+  } else {
+    play_question(speed);
+  }
+}
+function play_question(speed) {
   speechSynthesis.cancel();
   var su = new SpeechSynthesisUtterance();
-  su.lang = "<%=@card.q_lang%>";
-  su.text = "<%=Nokogiri::HTML(@card.question).text%>";
-  su.rate = 1;
+  su.lang = "<%=@card.a_lang%>";
+  su.text = question_text;
+  su.rate = speed;
   speechSynthesis.speak(su);
-  $("#question").on("click", function() {
-    speechSynthesis.cancel();
-    $("#answer").show();
-    var su = new SpeechSynthesisUtterance();
-    su.lang = "<%=@card.a_lang%>";
-    su.text = "<%=Nokogiri::HTML(@card.answer).text%>";
-    su.rate = 0.8;
-    speechSynthesis.speak(su);
-    });
-  $("#answer_text").on("click", function() {
-    speechSynthesis.cancel();
-    var su = new SpeechSynthesisUtterance();
-    su.lang = "en";
-    su.lang = "<%=@card.a_lang%>";
-    su.text = "<%=Nokogiri::HTML(@card.answer).text%>";
-    su.rate = 0.6;
-    speechSynthesis.speak(su);
+}
+function play_answer(speed) {
+  speechSynthesis.cancel();
+  var su = new SpeechSynthesisUtterance();
+  su.lang = "en";
+  su.lang = "<%=@card.a_lang%>";
+  su.text = answer_text;
+  su.rate = speed;
+  speechSynthesis.speak(su);
+}
+$(document).ready(function() {
+  play_question(1);
+  $('.flip').on("click", function(){
+    var card = $(this).find('.card');
+    card.toggleClass('flipped');
+    play_speaking(0.8);
+  });
+
+  $("#play_btn").on("click", function() {
+    play_speaking(0.8);
   });
 });
-  <% if @card.a_lang == "zh" %>
+<% if @card.a_lang == "zh" %>
   function chinese_trans(cc){
     var str='',str2;
     var s;
@@ -68,7 +133,7 @@ $(document).ready(function() {
     return str;
   }
   $(document).ready(function() {
-    $("#answer_text").append(chinese_trans("<%=@card.answer.html_safe%>"));
+    $("#answer_text").append(chinese_trans(answer_text));
   });
-  <% end %>
+<% end %>
 </script>

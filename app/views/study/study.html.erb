@@ -57,7 +57,7 @@ function play_speaking(speed) {
 function play_question(speed) {
   speechSynthesis.cancel();
   var su = new SpeechSynthesisUtterance();
-  su.lang = "<%=@card.a_lang%>";
+  su.lang = "<%=@card.q_lang%>";
   su.text = question_text;
   su.rate = speed;
   speechSynthesis.speak(su);
@@ -65,7 +65,6 @@ function play_question(speed) {
 function play_answer(speed) {
   speechSynthesis.cancel();
   var su = new SpeechSynthesisUtterance();
-  su.lang = "en";
   su.lang = "<%=@card.a_lang%>";
   su.text = answer_text;
   su.rate = speed;

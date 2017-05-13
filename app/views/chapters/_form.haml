@@ -1,0 +1,11 @@
+= simple_form_for @chapter do |f|
+  = f.input :book_id, as: 'hidden'
+  = f.input :title
+  %h3 Cards
+  #cards
+    = f.simple_fields_for :cards do |card|
+      = render 'card_fields', f: card
+    .links
+      = link_to_add_association 'add card', f, :cards
+  = f.submit
+

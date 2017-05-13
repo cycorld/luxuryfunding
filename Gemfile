@@ -1,14 +1,17 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.1'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'jquery-rails'
 gem 'devise'
 gem 'nokogiri'
 gem 'watir'
 gem 'phantomjs'
 gem 'seed_dump'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
+gem "cocoon"
+gem 'simple_form'
+gem 'haml'
 
 group :development, :test do
   gem "capistrano", "~> 3.8"

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources 'books'
+  resources 'chapters'
+  resources 'cards'
 
   devise_for :users
   get 'study/:box_id' => 'study#study'

@@ -40,7 +40,13 @@
 <script>
 $(document).ready(function() {
   $('.add_chapter').on('change', function() {
-    window.location.href = '/box/add_chapter/' + $(this).data('id') + '?box_id=' + $(this).val();
+    if ($(this).val() == "new")
+    {
+      var box_title = prompt('What`s title of the new box?');
+      window.location.href = '/box/add_chapter/' + $(this).data('id') + '?box_title=' + box_title;
+    } else {
+      window.location.href = '/box/add_chapter/' + $(this).data('id') + '?box_id=' + $(this).val();
+    }
   });
   $('.add_card').on('change', function() {
     window.location.href = '/box/add_card/' + $(this).data('id') + '?box_id=' + $(this).val();

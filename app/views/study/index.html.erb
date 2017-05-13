@@ -17,8 +17,9 @@
         <td>
           <%=form_tag "/box/create", class: "form-inline" do %>
             <div class="form-group">
-              <input type="text" class="form-control" name="title" placeholder="Input the title of a box">
-              <input type="submit" class="form-control" value="Create">
+              <label>Create a new box</label>
+              <input type="text" class="form-control" name="title" placeholder="Input the title">
+              <input type="submit" class="btn btn-danger form-control" value="Create">
             </div>
           <% end %>
         </td>

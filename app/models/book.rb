@@ -26,10 +26,10 @@ class Book < ActiveRecord::Base
     end
   end
 
-  def self.get_quizlet(book_title, chap_title, url)
+  def self.get_quizlet(user_id, book_title, chap_title, url)
     cards = Book.crawl_from_quizlet(url)
     if cards.present?
-      book = Book.find_or_create_by(title: book_title)
+      book = Book.find_or_create_by(title: book_title, user_id: user_id)
       chap = Chapter.create(book_id: book.id, title: chap_title)
       cards.each do |card|
         Card.create(chapter_id: chap.id,
@@ -42,7 +42,7 @@ class Book < ActiveRecord::Base
     end
   end
 
-  def self.get_folder_from_quizlet(url)
+  def self.get_folder_from_quizlet(url, user_id)
     require 'open-uri'
     if url =~ /https:\/\/quizlet\.com\/.+\/folders\/.+\/sets/
       browser = Watir::Browser.new(:phantomjs)
@@ -55,7 +55,7 @@ class Book < ActiveRecord::Base
       p title
       links.each do |link|
         p link
-        self.get_quizlet(title, link[:title], link[:link])
+        self.get_quizlet(user_id, title, link[:title], link[:link])
       end
     else
       p "invalid url"

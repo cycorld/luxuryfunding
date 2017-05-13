@@ -1,34 +1,5 @@
 <div class="row">
-  <div class="col-lg-6">
-    <h1>암기 자료</h1>
-    <% @books.each do |b| %>
-      <h2><%=b.title%></h2>
-      <table class="table table-condensed table-hover">
-        <tr>
-          <th>챕터</th>
-          <th>질문</th>
-          <th>답변</th>
-          <th>액션</th>
-        </tr>
-        <% b.chapters.each_with_index do |chapter, chapter_i| %>
-          <% chapter.cards.each_with_index do |c, i| %>
-            <tr <%="class=danger" if @memories.include? c.id%>>
-              <% if i == 0 %>
-                <td rowspan=<%=chapter.cards.length%>>
-                  <%=chapter.title%><br>
-                  <a class="add" href="/box/add_chapter/<%=chapter.id%>">통째로 추가</a>
-                </td>
-              <% end %>
-              <td><%=c.question.html_safe%></td>
-              <td><%=c.answer.html_safe%></td>
-              <td><a class="add" href="/box/add_card/<%=c.id%>">추가</a></td>
-            </tr>
-          <% end %>
-        <% end %>
-      </table>
-    <% end %>
-  </div>
-  <div class="col-lg-6">
+  <div class="col-lg-12">
     <h1>내 암기박스들</h1>
     <table class="table">
       <tr>
@@ -47,6 +18,12 @@
         <input type="text" class="form-control" name="title" placeholder="암기 박스 제목">
         <input type="submit" class="form-control" value="새로 만들기">
       </div>
+    <% end %>
+  </div>
+  <div class="col-lg-12">
+    <h1>암기 자료</h1>
+    <% @books.each do |b| %>
+      <h3><%=link_to "#{b.id}. #{b.title}", book_path(b)%></h3>
     <% end %>
   </div>
 </div>

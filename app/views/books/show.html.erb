@@ -63,18 +63,25 @@
 </table>
 <%= link_to '목록으로 가기', books_path %>
 <script>
+function check_box(el, url) {
+  if (el.val() == "new")
+  {
+    var box_title = prompt('What`s title of the new box?');
+    if (box_title != null) {
+      window.location.href = '/box/add_' + url + '/'  + el.data('id') + '?box_title=' + box_title;
+    } else {
+      a = el[0].children[0].selected = true;
+    }
+  } else {
+    window.location.href = '/box/add_' + url + '/' + el.data('id') + '?box_id=' + el.val();
+  }
+}
 $(document).ready(function() {
   $('.add_chapter').on('change', function() {
-    if ($(this).val() == "new")
-    {
-      var box_title = prompt('What`s title of the new box?');
-      window.location.href = '/box/add_chapter/' + $(this).data('id') + '?box_title=' + box_title;
-    } else {
-      window.location.href = '/box/add_chapter/' + $(this).data('id') + '?box_id=' + $(this).val();
-    }
+    check_box($(this), 'chapter');
   });
   $('.add_card').on('change', function() {
-    window.location.href = '/box/add_card/' + $(this).data('id') + '?box_id=' + $(this).val();
+    check_box($(this), 'card');
   });
 });
 </script>

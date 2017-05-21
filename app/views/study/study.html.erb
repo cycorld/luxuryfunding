@@ -72,14 +72,18 @@ function play_answer(speed) {
 }
 $(document).ready(function() {
   play_question(1);
-  $('.flip').on("click", function(){
-    var card = $(this).find('.card');
-    card.toggleClass('flipped');
-    play_speaking(0.8);
+  $('.flip').each(function() {
+    this.onclick = function() {
+      var card = $(this).find('.card');
+      card.toggleClass('flipped');
+      play_speaking(0.8);
+    }
   });
 
-  $("#play_btn").on("click", function() {
-    play_speaking(0.8);
+  $("#play_btn").each(function() {
+    this.onclick = function() {
+      play_speaking(0.8);
+    }
   });
 });
 <% if @card.a_lang == "zh" %>
